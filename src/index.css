@@ -1,0 +1,356 @@
+html,
+body {
+  max-width: 100%;
+  /* / overflow-x: hidden; / */
+}
+
+.imgPreviewDiv {
+  text-align: center;
+}
+
+.imgPreviewDiv img {
+  width: 75% !important;
+}
+
+.rdt_TableRow {
+  cursor: pointer !important;
+}
+
+.csvDiv {
+  font-size: 16px;
+  border: 1px solid #EF9848;
+  padding: 8px 10px;
+  color: #EF9848;
+}
+
+.searchInput {
+  background-color: #f1f4f9;
+  padding: 10px 18px;
+  width: 100%
+}
+
+.searchPolicyInput {
+  background-color: #f1f4f9;
+  padding: 10px 18px;
+  width: 15%
+}
+
+.searchIcon {
+  display: flex;
+  margin-left: -41px;
+  padding: 4px;
+  background: white;
+  border: 1px solid grey;
+  margin: 9px 6px 6px -40px;
+  border-radius: 5px;
+  height: 35px;
+}
+
+header {
+  display: inline !important;
+}
+
+.custom-cell {
+  font-size: 0.875rem !important;
+  font-family: 'Public Sans', sans-serif !important;
+}
+
+.data-table {
+  overflow-x: scroll !important;
+}
+
+.deleteIcon {
+  background-color: #f1f4f9;
+  border: 1px solid grey;
+  padding: 8px 9px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+span.editIcon {
+  padding: 8px 9px;
+  background-color: #f1f4f9;
+  border: 1px solid grey;
+  /* border-left: 1px solid grey;
+  border-bottom: 1px solid grey; */
+  border-radius: 7px;
+  /* / border-bottom-left-radius: 7px; / */
+}
+
+.rdt_TableRow,
+.rdt_TableCell,
+.gjoprN .rdt_TableCol,
+.rdt_TableCol_Sortable {
+  font-size: 0.875rem !important;
+  /* text-align: justify !important; */
+  /* justify-content: center !important; */
+}
+
+.editTitle {
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  text-decoration: underline !important;
+}
+
+.editTitle2 {
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+}
+
+.css-vl05fo-MuiPaper-root-MuiCard-root {
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  border-color: 0px !important;
+}
+
+.loginBgdiv {
+  background: url('./assets/images/users/loginBg.png') no-repeat !important;
+}
+
+.idBanModal .css-hz1bth-MuiDialog-container .css-druthd-MuiPaper-root-MuiDialog-paper {
+  width: 100% !important
+}
+
+.editInputField {
+  margin-bottom: 25px !important;
+}
+
+.editInputField .css-1ci3ki6-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 16.5px 14px 10.5px 12px !important;
+  line-height: 13px !important;
+}
+
+.editButtonDiv {
+  margin-bottom: 10px !important;
+  padding: 0px 24px 20px 24px !important;
+}
+
+.loginBtn {
+  background-color: #EF9848 !important;
+  width: 30% !important;
+  margin-left: 140px !important;
+}
+
+.loginBtn2 {
+  background-color: #EF9848 !important;
+  width: 60% !important;
+  /* / margin-left: 70px !important; / */
+}
+
+.authLoginDiv {
+  padding-left: 37px !important;
+  padding-top: 37px !important;
+}
+
+.authwrapperDiv {
+  width: 78% !important
+}
+
+.leftDiv {
+  margin-top: 200px !important;
+}
+
+#select {
+  min-width: 112px !important;
+  text-align: center !important;
+}
+
+.selectDiv {
+  max-width: 300px !important;
+}
+
+#select2 {
+  min-width: 344px !important;
+  line-height: 26px !important;
+}
+
+#select3 {
+  min-width: 226px !important;
+  line-height: 26px !important;
+}
+
+.assignroleSelect {
+  border: 1px solid #ced4da !important;
+  background-color: #f1f4f9 !important;
+  padding: 13px 4px 13px 4px !important;
+  color: #212529 !important;
+  border-radius: 5px;
+}
+
+.assignroleSelect::placeholder {
+  color: #999;
+}
+
+.designationForm #select {
+  line-height: 13px !important;
+
+}
+
+.selectstatusForm {
+  width: 100% !important
+}
+
+.selectstatus {
+  height: 145px !important;
+}
+
+.upperDiv {
+  background: white;
+  /* padding: 41px; */
+}
+
+.middlediv {
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+}
+
+.upperdetail {
+  box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 26px;
+  padding: 21px;
+}
+
+.selectROLEForm {
+  width: 81%;
+}
+
+label[data-shrink=false]+.MuiInputBase-formControl .css-o8pmqo-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 14px !important;
+}
+
+.editrequestbtn {
+  background-color: #EF9848;
+  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.searchDateInput {
+  background-color: #f1f4f9;
+  padding: 10px 18px;
+  width: 11%;
+  margin-right: 28px;
+}
+
+.labelfordate {
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.changePassdiv {
+  width: 60%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* / padding: 40px; / */
+  margin-top: 30px;
+}
+
+.changepassinnerdiv {
+  border: 1px solid #dcd4d4;
+  border-radius: 10px;
+  padding: 40px;
+  background-color: white;
+
+}
+
+.emailInput {
+  width: 80% !important;
+  border-radius: 7px !important;
+  padding: 5px 10px 5px 0px !important;
+}
+
+.formdiv {
+  margin-left: 29px !important;
+}
+
+.frameSelect {
+  padding: 6px !important;
+  border: 1px solid #d3cfcf !important;
+  background: white !important;
+  width: 154px !important;
+}
+
+.newClaimDiv .MuiPaper-root {
+  max-width: 1270px !important;
+}
+
+.newClaimDivagent .MuiPaper-root {
+  width: 1800px !important;
+}
+
+.loginselct {
+  line-height: 25px;
+}
+
+.newClaimDiv2 .MuiPaper-root {
+  max-width: 593px !important;
+}
+
+.newClaimDiv3 .MuiPaper-root {
+  max-width: 1000px !important;
+}
+
+.text-preview {
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.text-preview2 {
+  text-align: center;
+  padding: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.selectstatusForm label,
+.designationForm label,
+.selectROLEForm label {
+  line-height: 13px !important;
+  font-size: 0.775rem !important;
+}
+
+.selectDiv2,
+.selectDiv {
+  line-height: 0px !important;
+}
+
+.serviceprovider {
+  width: 100% !important;
+}
+
+.MuiSelect-multiple div {
+  display: flex;
+
+}
+
+.uploadinput input {
+  padding: 10.5px 14px 18.5px 12px !important;
+}
+
+
+.big-checkbox .form-check-input {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* .css-1q4wv95-MuiButtonBase-root-MuiListItemButton-root.Mui-selected {
+  color: white;
+  background-color: #7e00d1 !important;
+}
+
+.css-1q4wv95-MuiButtonBase-root-MuiListItemButton-root.Mui-selected:hover {
+  color: white;
+  background-color: rgb(126,0,209) !important;
+} */
