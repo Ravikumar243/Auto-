@@ -6,6 +6,8 @@ import { State, City } from "country-state-city";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 export const CustomerContext = createContext();
 
@@ -85,7 +87,7 @@ export const CustomerProvider = ({ children }) => {
   console.log(localVendorStateCity, "localVendorStateCitykjsdfk");
   const vendorIdFromSrn = fetcdataListItems?.vendorId;
 
-  console.log(vendorIdFromSrn, "vendorIdFromSrnkjflkdkf");
+  console.log(fetcdataListItems, "fetcdataListItemskjflkdkf");
   // lat and lon
   const [vLat, setVLat] = useState("");
   const [vLon, setVLon] = useState("");
@@ -466,8 +468,8 @@ export const CustomerProvider = ({ children }) => {
     product: "",
     paymentType: "",
     paymentUpdatedTime: "",
-    additionalKMs:"",
-    borderAndOtherCharges:"",
+    additionalKMs: "",
+    borderAndOtherCharges: "",
   });
 
   console.log(
@@ -851,35 +853,32 @@ export const CustomerProvider = ({ children }) => {
       const numberRegex = /^[0-9\s]*$/;
       if (!numberRegex.test(value)) return;
     }
-      if (name === "callTime" && value) {
-  const selectedDateTime = new Date(value);
-  const now = new Date();
+    if (name === "callTime" && value) {
+      const selectedDateTime = new Date(value);
+      const now = new Date();
 
-  // Extract only date (ignore time)
-  const selectedDate = new Date(
-    selectedDateTime.getFullYear(),
-    selectedDateTime.getMonth(),
-    selectedDateTime.getDate()
-  );
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      // Extract only date (ignore time)
+      const selectedDate = new Date(
+        selectedDateTime.getFullYear(),
+        selectedDateTime.getMonth(),
+        selectedDateTime.getDate()
+      );
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+      if (selectedDate.getTime() !== today.getTime()) {
+        toast.error("Call Time date must be today's date only.");
+        return;
+      }
 
-  if (selectedDate.getTime() !== today.getTime()) {
-    toast.error("Call Time date must be today's date only.");
-    return;
-  }
+      const selectedMinutes =
+        selectedDateTime.getHours() * 60 + selectedDateTime.getMinutes();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-
-  const selectedMinutes =
-    selectedDateTime.getHours() * 60 + selectedDateTime.getMinutes();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-  if (selectedMinutes >= currentMinutes) {
-    toast.error("Call Time must be earlier than the current time.");
-    return;
-  }
-}
-
+      if (selectedMinutes >= currentMinutes) {
+        toast.error("Call Time must be earlier than the current time.");
+        return;
+      }
+    }
 
     if (e.target.name === "Make") {
       try {
@@ -939,62 +938,6 @@ export const CustomerProvider = ({ children }) => {
     setGetallClaimData({ ...getallClaimData, [e.target.name]: e.target.value });
   };
 
-  // const handleAssist = (e) => {
-  //   const { name, value } = e.target;
-
-  //   if (name === "callTime") {
-  //     const currentTime = dayjs();
-  //     const [hours, minutes] = value.split(":");
-  //     const selectedTime = dayjs().hour(hours).minute(minutes);
-
-  //     if (selectedTime.isAfter(currentTime)) {
-  //       toast.error("Please select current or past time");
-  //       return;
-  //     }
-  //   }
-
-  //   if (name === "pincode") {
-  //     const numberRegx = /^[0-9\s]*$/;
-  //     if (!numberRegx.test(value)) return;
-  //   }
-
-  //   setFormAssistance((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //     srN_No: generatedSRN,
-  //   }));
-  //   console.log(name, "name state city");
-  //   if (name === "state") {
-  //     console.log(value, "value of state");
-  //     getCitiesByState(value);
-  //     setFormAssistance((prev) => ({ ...prev, city: "" }));
-  //   }
-  // };
-
-  // const handleService = (e) => {
-  //   const { name, value } = e.target;
-  //   if (value === "TOWING") {
-  //     setServiceType(value);
-  //     setVendorDistance((prev) => ({
-  //       ...prev,
-  //       ServiceType: value,
-  //     }));
-  //   } else if (value === "RSR") {
-  //     setServiceType(value);
-  //     setVendorDistance((prev) => ({
-  //       ...prev,
-  //       ServiceType: value,
-  //     }));
-  //   }
-  //   setFormIncident((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //     srN_No: generatedSRN,
-  //   }));
-  // };
-
-  // vedor search or ventor details
-
   const handleAssist = (e, isUserAction = true) => {
     // add a flag
     const { name, value } = e.target;
@@ -1030,6 +973,50 @@ export const CustomerProvider = ({ children }) => {
     }
   };
 
+  const handleDownloadHistory = async () => {
+    try {
+      if (!remarkLogsData || remarkLogsData.length === 0) {
+        alert("No remark data available!");
+        return;
+      }
+
+      const workbook = new ExcelJS.Workbook();
+      const sheet = workbook.addWorksheet("Assistance History");
+
+      // Define columns
+      sheet.columns = [
+        {header:"SRN Number", key : "srnNo", width:40},
+        { header: "Customer First Name", key: "firstName", width: 25 },
+        { header: "Assistance Remark", key: "remark", width: 40 },
+        { header: "External Remark", key: "externalRemark", width: 40 },
+        { header: "Date & Time", key: "date", width: 25 },
+        { header: "Stage", key: "stage", width: 20 },
+        { header: "Agent Id", key: "agentId", width: 15 },
+      ];
+      
+      console.log(fetcdataListItems?.customerFirstName,"fetckjdkfdataListItemssjdkljsfd")
+
+      remarkLogsData.forEach((item) => {
+        sheet.addRow({
+          srnNo : fetcdataListItems?.srN_No || "N/A",
+          firstName: fetcdataListItems?.customerFirstName || "N/A",
+          remark: item?.assistanceSummary ?? "N/A",
+           externalRemark: item?.externalAssistanceSummary ?? "N/A",
+          date: item?.date ?? "",
+          stage: item?.stage ?? "",
+          agentId: item?.agentId ?? "",
+        });
+      });
+
+      // Download
+      const buffer = await workbook.xlsx.writeBuffer();
+      saveAs(new Blob([buffer]), "Assistance_History.xlsx");
+    } catch (error) {
+      console.error(error);
+      alert("Excel download failed!");
+    }
+  };
+
   useEffect(() => {}, [serviceType]);
   console.log(serviceType, "servicetypesjdkfs");
 
@@ -1056,7 +1043,6 @@ export const CustomerProvider = ({ children }) => {
           ServiceType: "",
         }));
       } else {
-
         setServiceType(value);
         setVendorDistance((prev) => ({
           ...prev,
@@ -1090,7 +1076,7 @@ export const CustomerProvider = ({ children }) => {
     }
   };
 
-   const handleVendorAssign = (e) => {
+  const handleVendorAssign = (e) => {
     const { name, value } = e.target;
 
     if (
@@ -1186,7 +1172,7 @@ export const CustomerProvider = ({ children }) => {
       setSelectedRsaStatus(value);
     }
 
-      if (name === "followup_DateTime" && value) {
+    if (name === "followup_DateTime" && value) {
       const infoDateTimeString = fetcdataListItems?.informationDateTime;
 
       if (!infoDateTimeString) {
@@ -1260,41 +1246,43 @@ export const CustomerProvider = ({ children }) => {
   // cost Details ->recah Time
 
   const handleCostVendor = (e) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
-  if (name === "waitingHoursCharge") {
-    const numberRegx = /^[0-9\s]*$/;
-    if (!numberRegx.test(value)) return;
-  }
-
-  // ✅ Validate: paymentUpdatedTime > vendorDropTime
-  if (name === "paymentUpdatedTime" && value) {
-    const vendorDropTimeString =
-      fetcdataListItems?.vendorDropTime || "2025-11-03T17:30"; // fallback
-
-    if (!vendorDropTimeString) {
-      toast.warning("Please select Vendor Drop Time first.");
-      return;
+    if (name === "waitingHoursCharge") {
+      const numberRegx = /^[0-9\s]*$/;
+      if (!numberRegx.test(value)) return;
     }
 
-    // Convert both strings to Date objects
-    const vendorDropTime = new Date(vendorDropTimeString);
-    const paymentTime = new Date(value);
+    // ✅ Validate: paymentUpdatedTime > vendorDropTime
+    if (name === "paymentUpdatedTime" && value) {
+      const vendorDropTimeString =
+        fetcdataListItems?.vendorDropTime || "2025-11-03T17:30"; // fallback
 
-    // ✅ Strict comparison
-    if (paymentTime <= vendorDropTime) {
-      toast.error("Payment Date & Time must be greater than Vendor Drop Time.");
-      return;
+      if (!vendorDropTimeString) {
+        toast.warning("Please select Vendor Drop Time first.");
+        return;
+      }
+
+      // Convert both strings to Date objects
+      const vendorDropTime = new Date(vendorDropTimeString);
+      const paymentTime = new Date(value);
+
+      // ✅ Strict comparison
+      if (paymentTime <= vendorDropTime) {
+        toast.error(
+          "Payment Date & Time must be greater than Vendor Drop Time."
+        );
+        return;
+      }
     }
-  }
 
-  // ✅ Update form state
-  setFormUploadAssist((prev) => ({
-    ...prev,
-    [name]: name === "totalCharges" ? Number(value) || 0 : value,
-    srN_No: generatedSRN,
-  }));
-};
+    // ✅ Update form state
+    setFormUploadAssist((prev) => ({
+      ...prev,
+      [name]: name === "totalCharges" ? Number(value) || 0 : value,
+      srN_No: generatedSRN,
+    }));
+  };
 
   const calculatedTotalAmount = (
     Number(formUploadAssist?.waitingHoursCharge || 0) +
@@ -1470,8 +1458,8 @@ export const CustomerProvider = ({ children }) => {
       totalKilometers: fetcdataListItems.gtoG_KM || "",
       totalAmount: fetcdataListItems.totalAmount || "",
       finalAmountWithGST: fetcdataListItems.finalAmountWithGST || "",
-      additionalKMs : fetcdataListItems.additionalKMs || "",
-      borderAndOtherCharges : fetcdataListItems.borderAndOtherCharges || ""
+      additionalKMs: fetcdataListItems.additionalKMs || "",
+      borderAndOtherCharges: fetcdataListItems.borderAndOtherCharges || "",
     }));
     // 22 Aug
     if (fetcdataListItems?.incident_Location) {
@@ -1996,7 +1984,7 @@ export const CustomerProvider = ({ children }) => {
       );
       const data = await response.json();
       console.log("data response", data);
-      setService(data?.service)
+      setService(data?.service);
       const { savedVendors } = data;
       setVendorFetchList(savedVendors.slice(0, 8));
     } catch (error) {
@@ -2189,6 +2177,14 @@ export const CustomerProvider = ({ children }) => {
         setStepscount(7);
         // fetchSRNHistory();
         fetchSrnRemarkLogs();
+
+        setTimeout(() => {
+          console.log(formSrnStatus.rsaTimeLineStatus, "jfsldfjlsdfkdjf");
+          if (formSrnStatus.rsaTimeLineStatus !== "Case Completed") {
+            navigate("/dashboarddetails");
+          }
+        }, 800);
+
         if (formSrnStatus.srN_Remark === "Case Completed") {
           setExpanded(expanded === "open8" ? false : "open8");
         } else {
@@ -2199,9 +2195,6 @@ export const CustomerProvider = ({ children }) => {
         } else {
           setExpanded(expanded === "open6" ? false : "open6");
         }
-        setTimeout(() => {
-          navigate("/dashboarddetails");
-        }, 800);
       } else {
         toast.error("Failed to Submit !");
       }
@@ -2875,6 +2868,7 @@ export const CustomerProvider = ({ children }) => {
         formAssistance,
         setFormAssistance,
         handleAssist,
+        handleDownloadHistory,
         formIncident,
         handleService,
         handleServiceDetails,
@@ -2991,7 +2985,7 @@ export const CustomerProvider = ({ children }) => {
         showPopup,
         setShowPopup,
         makeComaniesList,
-        service
+        service,
       }}
     >
       {children}

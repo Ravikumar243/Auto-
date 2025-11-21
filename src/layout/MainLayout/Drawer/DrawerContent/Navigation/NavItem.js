@@ -98,6 +98,13 @@ const NavItem = ({ level, drawerOpen }) => {
       roles: ["Admin", "Agent"],
     },
     {
+      id: "oldmis",
+      label: "Old MIS Upload",
+      icon: <SpeedIcon />,
+      url: "/old-mis-upload",
+      roles: ["Admin"],
+    },
+    {
       id: "slaReport",
       label: "SLA Report",
       icon: <SpeedIcon />,

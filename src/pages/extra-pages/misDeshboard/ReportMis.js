@@ -6,30 +6,19 @@ import MainCard from "components/MainCard";
 import { Grid } from "@mui/material";
 import DataTable from "react-data-table-component";
 import { ToastContainer } from "react-toastify";
-// import { Selector } from '../../../../node_modules/@reduxjs/toolkit/dist/index'
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-// import Button from "themes/overrides/Button"
-// import { TextField } from "../../../../node_modules/@mui/material/index"
-// import { color } from "../../../../node_modules/jodit/esm/plugins/color/color"
-// import ReportMisHooks from "./ReportMisHooks"
-// import EditIcon from '@mui/icons-material/Edit';
-// import { Download } from "../../../../node_modules/@mui/icons-material/index";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import { Modal, Box, TextField, Button, Typography } from "@mui/material";
-
 import { Circles } from "react-loader-spinner";
+import moment from "moment";
 
 const ReportMis = () => {
-  // const Data = [
-  // 	{ 'S_No': "1", 'policyNumber': "123", 'serviceType': "4W FBT", 'SRN_no': "SRN407494333802", 'customerName': "Rishabh Khatana", 'customerMobile': "9719134152", 'Location': "sec 52 Noida", 'Location_type': "abc", 'modelName': "121-Tatamotors", 'vehicleRegistrationNumber': "vln00893#", 'chasisNo': "0899", 'created_Date': "4/24/2025", 'status': "ongoing", 'Action': "on the way of Incedent" },
-  // 	{ 'S_No': "2", 'policyNumber': "301", 'serviceType': "4W FBT", 'SRN_no': "SRN093032417371", 'customerName': "DEWA TOWING SERVICES", 'customerMobile': "9719134152", 'Location': "sec 52 Noida", 'Location_type': "abc", 'modelName': "101-Ecomet", 'vehicleRegistrationNumber': "vln00893#", 'chasisNo': "0899", 'created_Date': "4/24/2025", 'status': "ongoing", 'Action': "on the way of Incedent" },
-  // 	{ 'S_No': "3", 'policyNumber': "986", 'serviceType': "4W FBT", 'SRN_no': "SRN582838912920", 'customerName': "Shivam Crane Services", 'customerMobile': "9719134152", 'Location': "sec 52 Noida", 'Location_type': "abc", 'modelName': "VLI-FORD", 'vehicleRegistrationNumber': "vln00893#", 'chasisNo': "0899", 'created_Date': "4/24/2025", 'status': "ongoing", 'Action': "on the way of Incedent" },
-
   const {
     handleDowloadExcel,
     setSearch,
     filtercase,
     setFrom,
+    to,
     setTo,
     loading,
     setOpen,
@@ -42,7 +31,11 @@ const ReportMis = () => {
     setStep,
     handleSendOtp,
     handleVerifyOtp,
+    from,
   } = ReportMisHooks();
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userRole = userInfo?.role;
 
   const column = useMemo(() => [
     {
@@ -164,6 +157,21 @@ const ReportMis = () => {
       },
     },
   };
+
+  const formatDisplayDate = (value) => {
+    if (!value) return "";
+    return moment(value).format("DD/MM/YYYY");
+  };
+
+  const parseInputDate = (value) => {
+    // If user typed DD/MM/YYYY → convert to ISO
+    if (value.includes("/")) {
+      const [d, m, y] = value.split("/");
+      return moment(`${y}-${m}-${d}`).isValid() ? `${y}-${m}-${d}` : "";
+    }
+    return value;
+  };
+
   return (
     <div>
       <div className="">
@@ -196,20 +204,112 @@ const ReportMis = () => {
                 />
               </div>
             </div>
-            <div className="col-md-2">
+
+            {/* <div className="col-md-2">
               <input
                 type="date"
                 className="form-control py-2"
                 style={{ fontSize: "14px" }}
                 onChange={(e) => setFrom(e.target.value)}
+                max={
+                  userRole === "Agent"
+                    ? moment().format("YYYY-MM-DD")
+                    : undefined
+                }
+                min={
+                  userRole === "Agent"
+                    ? moment().subtract(2, "days").format("YYYY-MM-DD")
+                    : undefined
+                }
               />
             </div>
+
             <div className="col-md-2">
               <input
                 type="date"
                 className="form-control py-2"
                 style={{ fontSize: "14px" }}
                 onChange={(e) => setTo(e.target.value)}
+                max={
+                  userRole === "Agent"
+                    ? moment().format("YYYY-MM-DD")
+                    : undefined
+                }
+                min={
+                  userRole === "Agent"
+                    ? from || moment().subtract(2, "days").format("YYYY-MM-DD")
+                    : undefined
+                }
+              />
+            </div> */}
+            <div className="col-md-2">
+              <input
+                type={from ? "date" : "text"} // date when user focuses or already selected
+                className="form-control py-2"
+                style={{ fontSize: "14px" }}
+                placeholder="dd/mm/yyyy"
+                value={
+                  moment(from, "YYYY-MM-DD", true).isValid()
+                    ? document.activeElement?.type === "date"
+                      ? from
+                      : formatDisplayDate(from)
+                    : ""
+                }
+                onFocus={(e) => {
+                  e.target.type = "date";
+                  e.target.value = from; // IMPORTANT: set ISO value
+                }}
+                onBlur={(e) => {
+                  e.target.type = "text";
+                  e.target.value = formatDisplayDate(from);
+                }}
+                onChange={(e) => {
+                  setFrom(e.target.value); // always store ISO (YYYY-MM-DD)
+                }}
+                max={
+                  userRole === "Agent"
+                    ? moment().format("YYYY-MM-DD")
+                    : undefined
+                }
+                min={
+                  userRole === "Agent"
+                    ? moment().subtract(2, "days").format("YYYY-MM-DD")
+                    : undefined
+                }
+              />
+            </div>
+            <div className="col-md-2">
+              <input
+                type={to ? "date" : "text"} // SAME AS FROM INPUT
+                className="form-control py-2"
+                style={{ fontSize: "14px" }}
+                placeholder="dd/mm/yyyy"
+                value={
+                  moment(to, "YYYY-MM-DD", true).isValid()
+                    ? document.activeElement?.type === "date"
+                      ? to
+                      : formatDisplayDate(to)
+                    : ""
+                }
+                onFocus={(e) => {
+                  e.target.type = "date";
+                  e.target.value = to; // must be ISO yyyy-mm-dd
+                }}
+                onBlur={(e) => {
+                  e.target.type = "text";
+                  e.target.value = formatDisplayDate(to);
+                }}
+                onChange={(e) => setTo(e.target.value)} // always store ISO
+                max={
+                  userRole === "Agent"
+                    ? moment().format("YYYY-MM-DD")
+                    : undefined
+                }
+                min={
+                  userRole === "Agent"
+                    ? from || moment().subtract(2, "days").format("YYYY-MM-DD")
+                    : undefined
+                }
               />
             </div>
 

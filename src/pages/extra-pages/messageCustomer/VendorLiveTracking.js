@@ -17,13 +17,17 @@ const VendorLiveTracking = () => {
     tripStarted,
     startTracking,
     stopTracking,
-    tripEnded
+    tripEnded,
+    journeyType,
+    showDropButton
   } = MessageCustomerHooks();
 
   const mapRef = useRef(null);
   const routingRef = useRef(null);
   const vendorMarkerRef = useRef(null);
   const [distance, setDistance] = useState(null);
+
+  console.log(showDropButton,"drop button ")
 
   useEffect(() => {
     if (tracking) {
@@ -60,33 +64,16 @@ const VendorLiveTracking = () => {
       popupAnchor: [0, -40],
     });
 
-    // 📍 Vendor marker (movable)
-    // const vendorMarker = L.marker([vendorCoords.lat, vendorCoords.long])
-    //   .addTo(map)
-    //   .bindTooltip("🚚 Vendor", { permanent: true, direction: "top" })
-    //   .openTooltip();
-    // vendorMarkerRef.current = vendorMarker;
-
     const vendorMarker = L.marker([vendorCoords.lat, vendorCoords.long], {
       icon: vendorIcon,
     }).addTo(map);
-    // .bindTooltip("🚚 Vendor", { permanent: true, direction: "top" })
-    // .openTooltip();
-    vendorMarkerRef.current = vendorMarker;
 
-    // 📍 User marker
-    // L.marker([userLatLong.lat, userLatLong.long])
-    //   .addTo(map)
-    //   .bindTooltip("📍 User", { permanent: true, direction: "top" })
-    //   .openTooltip();
+    vendorMarkerRef.current = vendorMarker;
 
     L.marker([userLatLong.lat, userLatLong.long], { icon: userIcon }).addTo(
       map
     );
-    // .bindTooltip("📍 User", { permanent: true, direction: "top" })
-    // .openTooltip();
 
-    // 🧭 Routing setup
     const routingControl = L.Routing.control({
       waypoints: [
         L.latLng(vendorCoords.lat, vendorCoords.long),
@@ -170,42 +157,23 @@ const VendorLiveTracking = () => {
         </p>
       )}
 
-      {/* <div style={{ marginTop: "20px" }}>
-        {tripStarted ? (
-          <button
-            onClick={() => stopTracking(distance)}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#dc3545",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            ⏹ End Trip
-          </button>
-        ) : (
-          <button
-            onClick={async () => await startTracking(false)}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-              marginRight: "10px",
-            }}
-          >
-            ▶ Start Trip
-          </button>
-        )}
-      </div> */}
-
       <div style={{ marginTop: "20px" }}>
         {tripEnded ? (
           <h3 style={{ color: "red" }}>✔ Trip Ended</h3>
+        ) : showDropButton ? (
+          <button
+            onClick={() => console.log("Go to Drop Location clicked")}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#007bff",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            Go to Drop Location
+          </button>
         ) : tripStarted ? (
           <button
             onClick={() => stopTracking(distance)}
@@ -218,9 +186,10 @@ const VendorLiveTracking = () => {
               cursor: "pointer",
             }}
           >
-            ⏹ End Trip
+            Reached at Incident Location
           </button>
         ) : (
+          
           <button
             onClick={async () => await startTracking(false)}
             style={{

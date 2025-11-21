@@ -148,6 +148,7 @@ const Requestdetails = () => {
   generatedSRN,
   remarkLoading,
   remarkLogsData,
+  handleDownloadHistory
 } = useContext(CustomerContext)
 
   useEffect(() => {
@@ -1254,6 +1255,18 @@ const Requestdetails = () => {
                         </table>
                       </div>
                     </div>
+                  </div>
+                   <div className="col-md-3 d-flex align-items-end mb-4  ms-auto">
+                    <button
+                     type="button"
+                      className="btn text-white w-100"
+                      style={{
+                        backgroundColor: "#7E00D1",
+                      }}
+                      onClick={handleDownloadHistory}
+                    >
+                      Download Case History
+                    </button>
                   </div>
                 </div>
               </Grid>

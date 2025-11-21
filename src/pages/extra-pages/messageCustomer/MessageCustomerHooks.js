@@ -8,14 +8,17 @@ const MessageCustomerHooks = () => {
   const [userLatLong, setUserLatLong] = useState({ lat: null, long: null });
   const [error, setError] = useState(null);
   const [tracking, setTracking] = useState(false);
+  const [journeyType, setJourneyType] = useState("");
   const [tripStarted, setTripStarted] = useState(false);
   const [tripEnded, setTripEnded] = useState(false);
-  const intervalRef = useRef(null); 
+  const [showDropButton, setShowDropButton] = useState(false);
+  const intervalRef = useRef(null);
   const { search, state } = useLocation();
   const params = new URLSearchParams(search);
   const requestNumber = params.get("RequestNumber");
   const srnNumber = requestNumber || state?.srn_no || "";
 
+  console.log(journeyType,"journeysdfkjkk")
   // ✅ Send vendor coordinates to backend
   const callApi = useCallback(
     async (lat, long, tripType = "0") => {
@@ -39,7 +42,7 @@ const MessageCustomerHooks = () => {
     [srnNumber]
   );
 
-  // 🟡 Check trip status from backend when page loads
+  //  Check trip status from backend when page loads
   useEffect(() => {
     const checkTripStatus = async () => {
       try {
@@ -97,6 +100,9 @@ const MessageCustomerHooks = () => {
           body: JSON.stringify({ srN_No: srnNumber }),
         });
         const data = await res.json();
+        console.log(data?.dataItem[0], "datakdjflsdj")
+        setJourneyType(data?.dataItem[0]?.serviceDrop_IncidentType);
+        console.log(data?.dataItem[0]?.serviceDrop_IncidentType, "datakdfl");
         setUserLatLong({
           lat: Number(data?.dataItem[0]?.user_Latitude),
           long: Number(data?.dataItem[0]?.uSer_Longitude),
@@ -193,19 +199,23 @@ const MessageCustomerHooks = () => {
       }
 
       console.log(`📏 Distance to customer: ${distance} km`);
-      if (distance > 0.5) {
-        Swal.fire(
-          "Too Far!",
-          `You are too far from the customer (${distance} km away).`,
-          "error"
-        );
-        return;
-      }
+      // if (distance > 0.5) {
+      //   Swal.fire(
+      //     "Too Far!",
+      //     `You are too far from the customer (${distance} km away).`,
+      //     "error"
+      //   );
+      //   return;
+      // }
 
       setTracking(false);
       setTripStarted(false);
-      setTripEnded(true);
-
+      console.log(journeyType,"journeysdfkj")
+      if (journeyType === "RSR") {
+        setTripEnded(true);
+      } else if (journeyType === "TOWING") {
+        setShowDropButton(true);
+      }
 
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -223,7 +233,7 @@ const MessageCustomerHooks = () => {
       Swal.fire("Trip Ended!", "Vendor trip tracking has stopped.", "success");
       console.log("🛑 Tracking stopped");
     },
-    [callApi]
+    [callApi, journeyType, setShowDropButton, setTripEnded]
   );
 
   // ✅ Cleanup interval on unmount
@@ -245,7 +255,9 @@ const MessageCustomerHooks = () => {
     startTracking,
     stopTracking,
     tripStarted,
-    tripEnded
+    tripEnded,
+    journeyType,
+    showDropButton,
   };
 };
 

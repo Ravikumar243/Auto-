@@ -26,6 +26,9 @@ import UploadMakes from 'pages/extra-pages/upload-Make/UploadMakes';
 import UploadCItysHooks from 'pages/extra-pages/upload-city/UploadCItysHooks';
 import CreateUser from 'pages/extra-pages/create-user/CreateUser';
 import SpinneyData from 'pages/extra-pages/Vcrf/SpinneyData';
+import { element } from 'prop-types';
+import { OldMisUpload } from 'pages/extra-pages/misDeshboard/OldMisUpload';
+import ViewPage from 'pages/extra-pages/Viewpage/ViewPage';
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -96,6 +99,14 @@ const MainRoutes = {
     {
       path: 'vcrf-record',
       element: <VcrfRecord />,
+    },
+    {
+      path: 'old-mis-upload',
+      element : <OldMisUpload/>
+    },
+    {
+      path: "view-page",
+      element: <ViewPage/>
     },
     {
       path: 'Feedback',

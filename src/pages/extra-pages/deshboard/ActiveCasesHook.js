@@ -97,21 +97,16 @@ const ActiveCasesHook = () => {
     }
     // search Completed or recalled cases SRN
     if (comSearch !== '') {
-      setCompleted(data.filter(row => row.srN_Remark === "Ongoing" && row.rsaStatus === "Case Completed")
+      setCompleted(data.filter(row => row.srN_Remark === "Vendor Assigned" && row.rsaStatus === "Case Completed")
         .filter((row) =>
           row.srN_No?.toLowerCase().includes(comSearch.toLowerCase()) ||
           row.customerMobileNo?.toLowerCase().includes(comSearch.toLowerCase())
         ));
     } else {
-      setCompleted(data.filter(row => row.srN_Remark === "Ongoing" && row.rsaStatus === "Case Completed"));
+      setCompleted(data.filter(row => row.srN_Remark === "Vendor Assigned" && row.rsaStatus === "Case Completed"));
     }
 
-    // search Escalated  cases SRN
-    // setEscalated(data.filter(row => row.vendorName !== '' && row.rsaStatus !== "Case Completed" && row.srN_Remark === "Ongoing" && row.tat >= 8)
-    //   .filter(row => row.srN_No?.toLowerCase().includes(escSearch.toLowerCase()) ||
-    //     row.customerMobileNo?.toLowerCase().includes(escSearch.toLowerCase())
-    //   )
-    // );
+
     if (escSearch !== '') {
       const searchFilteredData = data.filter(row => {
         const tat = Number(row.tat ?? 0);
@@ -164,11 +159,6 @@ const ActiveCasesHook = () => {
       setEscalated(filteredData);
     }
 
-    // search Follow-up  cases SRN
-    // setAssigned(data.filter(row => row.vendorName !== '' && row.srN_Remark === "Ongoing" && row.rsaStatus !== "Case Completed")
-    //   .filter(row => row.srN_No?.toLowerCase().includes(followsearch.toLowerCase()) ||
-    //     row.customerMobileNo?.toLowerCase().includes(followsearch.toLowerCase())
-    //   ));
 
     if (followsearch !== '') {
       const followFilteredData = data.filter(row => {
@@ -224,71 +214,10 @@ const ActiveCasesHook = () => {
 
       setAssigned(filteredData2);
     }
-    // follow up backup
-    // if (followsearch !== '') {
-    //   const followFilteredData = data.filter(row => {
-    //     const tat = Number(row.tat);
-    //     const reachTAT = Number(row.reachTAT);
-    //     const reachComTAT = Number(row.reachCompleteTAT);
-    //     const dropsTAT = Number(row.dropTAT);
-    //     const dropCom_TAT = Number(row.dropCompleteTAT);
+   
+  
 
-    //     const condition1 = row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && tat <= 8 && row.rsaStatus !== 'Case Completed' && row.srN_Remark === "Ongoing";
-
-    //     const condition2 = row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "Reached at Incident location" && row.srN_Remark === "Ongoing" && ((tat < 8 && reachTAT == '') || (tat < 8 && reachTAT <= 60));
-
-    //     const condition3 = row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "on the way to incident" && row.srN_Remark === "Ongoing" && (reachTAT <= 60 && reachComTAT == '');
-
-    //     const condition4 = row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "On the way to drop" && row.srN_Remark === "Ongoing" && (reachComTAT <= 60);
-
-    //     const condition5 = row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "Drop Completed" && row.srN_Remark === "Ongoing" && (dropCom_TAT <= 60);
-
-    //     // const condition4 = row.serviceDrop_IncidentType === "RSR" && row.vendorName !== '' && tat <= 7 && row.rsaStatus !== 'Case Completed' && row.srN_Remark === "Ongoing";
-
-    //     // const condition5 = row.serviceDrop_IncidentType === "RSR" && row.rsaStatus === "Reached at Incident location" && reachTAT <= 45 && row.srN_Remark === "Ongoing";
-
-    //     return condition1 || condition2 || condition3 || condition4;
-    //     // || condition4 || condition5;
-    //   }).filter(row => row.srN_No?.toLowerCase().includes(followsearch.toLowerCase()) ||
-    //     row.customerMobileNo?.toLowerCase().includes(followsearch.toLowerCase())
-    //   );
-    //   setAssigned(followFilteredData);
-    // } else {
-    //   const filteredData2 = data.filter(row => {
-    //     const tat = Number(row.tat);
-    //     const reachTAT = Number(row.reachTAT);
-    //     const reachComTAT = Number(row.reachCompleteTAT);
-    //     const dropTAT = Number(row.dropTAT);
-    //     const dropCom_TAT = Number(row.dropCompleteTAT);
-
-    //     const condition1 = (row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && row.rsaStatus !== 'Case Completed' && row.srN_Remark === "Ongoing") && (tat <= 8 && reachTAT == '');
-    //     // const condition2 = row.serviceDrop_IncidentType === "TOWING" && row.srN_Remark === "Ongoing" && row.rsaStatus === '' && (tat < 8);
-
-    //     const condition3 = row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && row.rsaStatus === "On the way to Incident" && row.srN_Remark === "Ongoing" && (reachTAT <= 60 && reachComTAT == '');
-
-    //     const condition4 = row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && row.rsaStatus === "Reached at Incident location" && row.srN_Remark === "Ongoing" && (reachComTAT <= 60 && dropTAT == '');
-
-    //     const condition5 = row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && row.rsaStatus === "On the way to drop" && row.srN_Remark === "Ongoing" && (dropTAT <= 60 && dropCom_TAT == '');
-
-    //     const condition6 = row.serviceDrop_IncidentType === "TOWING" && row.vendorName !== '' && row.rsaStatus === "Drop Completed" && row.srN_Remark === "Ongoing" && (dropCom_TAT <= 60);
-    //     return condition1 || condition3 || condition4 || condition5 || condition6;
-
-    //     // const condition3 = row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "on the way to incident" && row.srN_Remark === "Ongoing" && (reachTAT <= 45 && reachComTAT == '');
-    //     // const condition3 = (row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "Reached at Incident location" && row.srN_Remark === "Ongoing") && ((tat <= 8 && reachTAT == '') || (tat <= 8 && reachTAT <= 60));
-
-    //     // const condition4 = (row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "On the way to drop" && row.srN_Remark === "Ongoing") && ((tat <= 8 && reachTAT == '') || (tat <= 8 && reachTAT <= 60));
-
-    //     // const condition5 = (row.serviceDrop_IncidentType === "TOWING" && row.rsaStatus === "Drop Completed" && row.srN_Remark === "Ongoing") && dropTAT < 60;
-
-    //     // const condition6 = (row.serviceDrop_IncidentType === "RSR" && row.vendorName !== '' && row.rsaStatus !== 'Case Completed' && row.srN_Remark === "Ongoing") && tat <= 7;
-
-    //     // const condition7 = (row.serviceDrop_IncidentType === "RSR" && row.rsaStatus === "Reached at Incident location" && row.srN_Remark === "Ongoing") && reachTAT <= 45;
-
-    //     // || condition2
-    //     // condition4 || condition5 || condition6 || condition7;
-    //   });
-    //   setAssigned(filteredData2);
-    // }
+    
 
     if (mysearch !== '') {
       setMycases(data.filter(row => row.assigned_AgentId === agent)

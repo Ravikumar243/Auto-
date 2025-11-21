@@ -4,8 +4,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine";
 import axios from "axios";
-import baseURL from "../../../api/autoApi"; // ✅ import your API base URL
+import baseURL from "../../../api/autoApi"; 
 import logo from "../../../assets/images/users/aaLogo.png";
+import vendorImg from "../../../assets/images/users/driver.avif";
+import userImg from "../../../assets/images/users/usermark.png";
 import "../messageCustomer/vendorLocation.css";
 
 const LiveTracking = () => {
@@ -21,7 +23,18 @@ const LiveTracking = () => {
   const vendorMarkerRef = useRef(null);
   const userMarkerRef = useRef(null);
 
-  // ✅ Function to fetch updated coordinates
+  const vendorIcon = L.icon({
+  iconUrl: vendorImg,
+  iconSize: [45, 45],   // adjust size
+  iconAnchor: [22, 45], 
+});
+
+const userIcon = L.icon({
+  iconUrl: userImg,
+  iconSize: [40, 40], 
+  iconAnchor: [20, 40],
+});
+
   const fetchCoordinates = async () => {
   try {
     const res = await axios.post(`${baseURL}/GetAllCoordinates`, {
@@ -73,7 +86,8 @@ const LiveTracking = () => {
 };
 
 
-  // ✅ Initialize Map (only once)
+
+
   useEffect(() => {
     if (!vendorLoc?.lat || !userLoc?.lat) return;
 
@@ -91,6 +105,9 @@ const LiveTracking = () => {
     const map = L.map("map").setView([vendorLat, vendorLng], 11);
     mapRef.current = map;
 
+
+    
+
     // Add tile layer
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -98,14 +115,17 @@ const LiveTracking = () => {
     }).addTo(map);
 
     // Add markers
-    const vendorMarker = L.marker([vendorLat, vendorLng])
+    const vendorMarker = L.marker([vendorLat, vendorLng], { icon: vendorIcon })
       .addTo(map)
-      .bindTooltip("🚚 Vendor", { permanent: true, direction: "top" });
-    vendorMarkerRef.current = vendorMarker;
+      // .bindTooltip("Vendor", { permanent: true, direction: "top" });
 
-    const userMarker = L.marker([userLat, userLng])
+        vendorMarkerRef.current = vendorMarker;
+
+
+    const userMarker = L.marker([userLat, userLng], { icon: userIcon })
       .addTo(map)
-      .bindTooltip("📍 User", { permanent: true, direction: "top" });
+      // .bindTooltip("User", { permanent: true, direction: "top" });
+
     userMarkerRef.current = userMarker;
 
     // Routing Control

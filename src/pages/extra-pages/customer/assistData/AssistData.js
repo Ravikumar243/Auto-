@@ -1061,18 +1061,7 @@ const AssistData = () => {
                   />
                 </div>
 
-                {/* <div className="col-md-3 d-flex align-items-end mb-4">
-                  <button
-                    className="btn text-white w-100"
-                    style={{
-                      backgroundColor:"#7E00D1",
-                    
-                    }}
-                    // onClick={handleDownloadHistory}
-                  >
-                    Download Case History
-                  </button>
-                </div> */}
+               
                 <div className="d-flex justify-content-center gap-5">
                   {loadingTest === true ? (
                     <button

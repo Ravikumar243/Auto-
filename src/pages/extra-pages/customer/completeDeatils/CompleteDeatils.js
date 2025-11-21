@@ -8,9 +8,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import  {
-  CustomerContext,
-} from "../createDetails/CreateCustomerHooks";
+import { CustomerContext } from "../createDetails/CreateCustomerHooks";
 import Accordion from "@mui/material/Accordion";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -47,6 +45,7 @@ const CompleteDeatils = () => {
     handleSelect,
     remarkLoading,
     remarkLogsData,
+    handleDownloadHistory
   } = useContext(CustomerContext);
 
   const status = ["Accepeted", "Rejected", "Re-Assign"];
@@ -57,7 +56,6 @@ const CompleteDeatils = () => {
   const [remove, setRemove] = useState(true);
 
   const [currentTime, setCurrentTime] = useState(dayjs().format("HH:mm:ss"));
- 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -1243,6 +1241,19 @@ const CompleteDeatils = () => {
                         </table>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="col-md-3 d-flex align-items-end mb-4  ms-auto">
+                    <button
+                     type="button"
+                      className="btn text-white w-100"
+                      style={{
+                        backgroundColor: "#7E00D1",
+                      }}
+                      onClick={handleDownloadHistory}
+                    >
+                      Download Case History
+                    </button>
                   </div>
 
                   <div className="d-flex justify-content-center mt-5 gap-5">

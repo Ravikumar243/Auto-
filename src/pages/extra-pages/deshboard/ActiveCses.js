@@ -187,243 +187,11 @@ const AutoActivecases = () => {
       width: "240px",
       cell: (row) => (
         <>
-          {/* {row.srN_Status}  */}
           {row.tat}
         </>
       ),
     },
-    // {
-    //     name: 'Vendor Reach Time',
-    //     selector: row => row.reachTAT,
-    //     width: "240px",
-    //     cell: row => <>
-    //         {/* {row.srN_Status}  */}
-    //         {row.reachTAT}
-    //     </>
-    // },
-    // {
-    //     name: 'Vendro Drop Time',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>
-    //         {/* {row.srN_Status}  */}
-    //         {row.dropTAT}
-    //     </>
-    // },
-    // {
-    //     name: 'Reach Com Tat',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.reachCompleteTAT}</>
-    // },
-    // {
-    //     name: 'drop CompleteTAT Tat',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.dropCompleteTAT}</>
-    // },
-    // {
-    //     name: 'Action',
-    //     cell: (row, index) => {
-    //         // <>
-    //         //     <button style={{ padding: '4px 8px', borderRadius: '4px', color: 'white', border: '0px solid transparent' }}>Edit follow</button>
-    //         // </>
-    //         if (row.serviceDrop_IncidentType === "TOWING") {
-    //             const tat = Number(row.tat)
-    //             const reachTAT = Number(row.reachTAT)
-    //             const reachComTAT = Number(row.reachCompleteTAT)
-    //             const dropTAT = Number(row.dropTAT);
-    //             const dropComTAT = Number(row.dropCompleteTAT);
-
-    //             if (row.vendorName !== '' && tat < 8 && row.rsaStatus === "") {
-    //                 console.log("minDifference", tat);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (tat >= 0 && tat <= 3) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (tat <= 5) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (tat <= 7) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             } else if (row.rsaStatus === "Reached at Incident location" && reachComTAT < 60) {
-    //                 // const minDifference = getMinutesDiff(row.reachTAT);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (reachComTAT >= 0 && reachComTAT < 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (reachComTAT <= 50) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (reachComTAT <= 60) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit</button>
-    //                     </div>
-    //                 );
-    //             }
-    //             else if (row.rsaStatus === "On the way to Incident" && reachTAT < 60) {
-    //                 // const minDifference = getMinutesDiff(row.reachTAT);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (reachTAT >= 0 && reachTAT <= 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (reachTAT <= 50) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (reachTAT <= 60) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             }
-    //             else if (row.rsaStatus === "Drop Completed" && dropComTAT < 60) {
-    //                 // const minDifference = getMinutesDiff(row.reachTAT);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (reachComTAT >= 0 && reachComTAT <= 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (reachComTAT <= 50) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (reachComTAT <= 60) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             }
-    //             else if (row.rsaStatus === "On the way to drop" && dropTAT < 60) {
-    //                 // const minDifference = getMinutesDiff(row.reachTAT);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (dropTAT >= 0 && dropTAT <= 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (dropTAT <= 50) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (dropTAT <= 60) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             } else {
-    //                 console.log("   ")
-    //             }
-    //         } else if (row.serviceDrop_IncidentType === "RSR") {
-    //             const tat = Number(row.tat)
-    //             const reachTAT = Number(row.reachTAT)
-    //             const reachComTAT = Number(row.reachCompleteTAT)
-    //             if (row.vendorName !== '' && tat < 8 && row.rsaStatus === "") {
-    //                 console.log("minDifference", tat);
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (tat >= 0 && tat <= 3) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (tat < 5) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (tat < 7) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             } else if (row.rsaStatus === "On the way to Incident" && reachTAT <= 45) {
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (reachTAT >= 0 && reachTAT <= 30) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (reachTAT <= 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (reachTAT <= 45) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             } else if (row.rsaStatus === "Reached at Incident location" && reachComTAT <= 45) {
-    //                 let buttonStyle = {
-    //                     padding: '4px 8px',
-    //                     borderRadius: '4px',
-    //                     color: 'white',
-    //                     border: '0px solid transparent',
-    //                     fontSize: '0.875rem !important'
-    //                 };
-    //                 if (reachComTAT >= 0 && reachComTAT <= 30) {
-    //                     buttonStyle.backgroundColor = 'rgb(0, 255, 68)';
-    //                 } else if (reachComTAT <= 40) {
-    //                     buttonStyle.backgroundColor = 'rgb(255,191,0)';
-    //                 }
-    //                 else if (reachComTAT <= 45) {
-    //                     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //                 }
-    //                 return (
-    //                     <div>
-    //                         <button style={buttonStyle}>Edit </button>
-    //                     </div>
-    //                 );
-    //             }
-    //         }
-    //     },
-    //     width: "200px"
-    // }
+    
   ]);
 
   const column1 = useMemo(() => [
@@ -435,12 +203,6 @@ const AutoActivecases = () => {
             style={{ cursor: "pointer" }}
             onClick={(e) => handleSearchCases(row.srN_No)}
           />
-          {/* <Button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={(e) => handleSearchCases(row.srN_No)}
-                    style={{ backgroundColor: "#7E00D1", border: "0px", fontSize: '0.875rem !important', }}
-                > <SearchOutlinedIcon style={{ cursor: "pointer", }} /></Button> */}
         </div>
       ),
       width: "130px",
@@ -456,32 +218,16 @@ const AutoActivecases = () => {
       width: "160px",
       cell: (row) => <> {row.srN_Remark}</>,
     },
-    // {
-    //     name: 'Status',
-    //     selector: row => row.rsaStatus,
-    //     width: "240px",
-    //     cell: row => <>
-    //         {/* {row.srN_Status}  */}
-    //          {row.rsaStatus ==="" ? row.rsaStatus : row.srN_Status}
-    //         {/* {row.rsaStatus} */}
-    //     </>
-    // },
     {
       name: "Status",
       selector: (row) => row.srN_Status || row.srN_Status,
       width: "240px",
       cell: (row) => (
         <>
-          {/* {row.rsaStatus} */}
           {row.rsaStatus ? row.rsaStatus : row.srN_Status}
         </>
       ),
     },
-    // {
-    //     name: "Policy Number",
-    //     selector: (row) => row.policyNumber,
-    //     width: "130px"
-    // },
 
     {
       name: "Customer Name",
@@ -533,7 +279,7 @@ const AutoActivecases = () => {
           const isWithinFirst3Seconds = (dateString) => {
             const date = new Date(
               dateString.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")
-            ); // convert DD-MM-YYYY
+            ); 
             const seconds = date.getMinutes();
             return seconds >= 0 && seconds <= 2;
           };
@@ -557,100 +303,7 @@ const AutoActivecases = () => {
       width: "240px",
       cell: (row) => <>{row.tat}</>,
     },
-    // {
-    //     name: 'Reach TAT',
-    //     selector: row => row.reachTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.reachTAT}</>
-    // },
-    // {
-    //     name: 'Drop Tat',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.dropTAT}</>
-    // },
-    // {
-    //     name: 'Reach Com Tat',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.reachCompleteTAT}</>
-    // },
-    // {
-    //     name: 'drop CompleteTAT Tat',
-    //     selector: row => row.dropTAT,
-    //     width: "240px",
-    //     cell: row => <>{row.dropCompleteTAT}</>
-    // },
-    // {
-    //     name: 'Action',
-    //     cell: (row, index) => {
-    //         const reachtat = Number(row.reachTAT)
-    //         const tat = Number(row.tat);
-    //         const reach_TAT = Number(row.reachTAT);
-    //         const drop_TAT = Number(row.dropTAT);
-    //         const reachComTAT = Number(row.reachCompleteTAT);
-    //         const dropComTAT = Number(row.dropCompleteTAT);
-
-    //         if (row.serviceDrop_IncidentType === "TOWING") {
-    //             // const minDifference = getMinutesDiff();
-    //             let buttonStyle = {
-    //                 padding: '4px 8px',
-    //                 borderRadius: '4px',
-    //                 color: 'white',
-    //                 border: '0px solid transparent',
-    //                 backgroundColor: 'rgba(255, 0, 0, 0.96)',
-    //                 fontSize: '0.875rem !important'
-    //             };
-    //             if (tat > 7 && row.rsaStatus === '') {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             } else if (reach_TAT >= 60) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             } else if (reachComTAT >= 60) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             } else if (drop_TAT > 60) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             } else if (dropComTAT > 60) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             }
-    //             // else if (reach_TAT > 60 && row.rsaStatus === 'On the way to Incident') {
-    //             //     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             // } else if (reachComTAT > 60 && row.rsaStatus === 'Reached at Incident location') {
-    //             //     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             // } else if (drop_TAT > 45 && row.rsaStatus === 'On the way to drop') {
-    //             //     buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             // }
-    //             return (
-    //                 <div>
-    //                     <button style={buttonStyle}>Edit </button>
-    //                 </div>
-    //             );
-    //         }
-    //         else if (row.serviceDrop_IncidentType === "RSR") {
-    //             let buttonStyle = {
-    //                 padding: '4px 8px',
-    //                 borderRadius: '4px',
-    //                 color: 'white',
-    //                 border: '0px solid transparent',
-    //                 backgroundColor: 'rgba(255, 0, 0, 0.96)',
-    //                 fontSize: '0.875rem !important'
-    //             };
-    //             if (tat > 7 && row.rsaStatus === '') {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             }
-    //             if (reachtat > 45) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             } if (reachComTAT > 45) {
-    //                 buttonStyle.backgroundColor = 'rgba(255, 0, 0, 0.96)';
-    //             }
-    //             return (
-    //                 <div> <button style={buttonStyle}>Edit </button>  </div>
-    //             );
-    //         }
-
-    //     },
-
-    //     width: "200px"
-    // }
+   
   ]);
 
   const column = useMemo(() => [

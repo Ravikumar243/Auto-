@@ -21,23 +21,24 @@ import "react-toastify/dist/ReactToastify.css";
 
 const VendorDeatils = () => {
   const {
-  loadingTest,
-  handleAccordionChange,
-  formSrnStatus,
-  expanded,
-  fetcdataListItems,
-  formIncident,
-  handleService,
-  handleClose,
-  handleVendordetailsSubmit,
-  handleStatus,
-  historySrn,
-  generatedSRN,
-  remarkLoading,
-  remarkLogsData,
-  selectedRsaStatus,
-  setFormSrnStatus
-} = useContext(CustomerContext)
+    loadingTest,
+    handleAccordionChange,
+    formSrnStatus,
+    expanded,
+    fetcdataListItems,
+    formIncident,
+    handleService,
+    handleClose,
+    handleVendordetailsSubmit,
+    handleStatus,
+    historySrn,
+    generatedSRN,
+    remarkLoading,
+    remarkLogsData,
+    selectedRsaStatus,
+    setFormSrnStatus,
+    handleDownloadHistory
+  } = useContext(CustomerContext);
   const remarksOngoing = [
     "Vendor Assigned",
     "Customer Not Responding",
@@ -91,13 +92,16 @@ const VendorDeatils = () => {
   ];
   const { handleDownload } = VendorDetailsHooks();
   // const storedServiceType = localStorage.getItem("serviceType");
-    const serviceTypefromSrnData = fetcdataListItems?.serviceDrop_IncidentType ==="RSR" ?fetcdataListItems?.serviceDrop_IncidentType : fetcdataListItems?.serviceDrop_IncidentDetails
+  const serviceTypefromSrnData =
+    fetcdataListItems?.serviceDrop_IncidentType === "RSR"
+      ? fetcdataListItems?.serviceDrop_IncidentType
+      : fetcdataListItems?.serviceDrop_IncidentDetails;
 
   console.log(formSrnStatus, "formSrnStatusdjflksdk");
 
   return (
     <>
-        <Accordion
+      <Accordion
         expanded={expanded === "open6"}
         onChange={handleAccordionChange("open6")}
         sx={{ margin: "0px 0px 18px 0px" }}
@@ -950,7 +954,7 @@ const VendorDeatils = () => {
 
                           // ✅ Static or API-based info date for validation
                           const infoDateTimeString =
-                            fetcdataListItems?.informationDateTime 
+                            fetcdataListItems?.informationDateTime;
 
                           if (!infoDateTimeString) {
                             toast.warning(
@@ -1484,6 +1488,19 @@ const VendorDeatils = () => {
                       </table>
                     </div>
                   </div>
+                </div>
+
+                <div className="col-md-3 d-flex align-items-end mb-4  ms-auto">
+                  <button
+                    type="button"
+                    className="btn text-white w-100"
+                    style={{
+                      backgroundColor: "#7E00D1",
+                    }}
+                    onClick={handleDownloadHistory}
+                  >
+                    Download Case History
+                  </button>
                 </div>
 
                 <div className="d-flex justify-content-center gap-5">
